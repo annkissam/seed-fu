@@ -23,10 +23,14 @@ module SeedFu
   @@fixture_paths = ['db/fixtures']
 
   # Load seed data from files
-  # @param [Array] fixture_paths The paths to look for seed files in
+  # @param [Array] fixture_paths The path/paths to look for seed files in
   # @param [Regexp] filter If given, only filenames matching this expression will be loaded
-  def self.seed(fixture_paths = SeedFu.fixture_paths, filter = nil)
-    Runner.new(fixture_paths, filter).run
+  def self.seed(fixture_paths_or_path = SeedFu.fixture_paths, filter = nil)
+    if fixture_paths_or_path.is_a?(String) && File.file?(fixture_paths_or_path)
+       Runner.new.run_file(fixture_paths_or_path)
+    else
+      Runner.new(fixture_paths_or_path, filter).run
+    end
   end
 end
 

@@ -27,26 +27,26 @@ module SeedFu
       end
     end
 
-    private
+    def run_file(filename)
+      puts "\n== Seed from #{filename}" unless SeedFu.quiet
 
-      def run_file(filename)
-        puts "\n== Seed from #{filename}" unless SeedFu.quiet
-
-        ActiveRecord::Base.transaction do
-          open(filename) do |file|
-            chunked_ruby = ''
-            file.each_line do |line|
-              if line == "# BREAK EVAL\n"
-                eval(chunked_ruby)
-                chunked_ruby = ''
-              else
-                chunked_ruby << line
-              end
+      ActiveRecord::Base.transaction do
+        open(filename) do |file|
+          chunked_ruby = ''
+          file.each_line do |line|
+            if line == "# BREAK EVAL\n"
+              eval(chunked_ruby)
+              chunked_ruby = ''
+            else
+              chunked_ruby << line
             end
-            eval(chunked_ruby) unless chunked_ruby == ''
           end
+          eval(chunked_ruby) unless chunked_ruby == ''
         end
       end
+    end
+
+      private
 
       def open(filename)
         if filename[-3..-1] == '.gz'

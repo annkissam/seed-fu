@@ -21,4 +21,11 @@ describe SeedFu::Runner do
     SeedFu.seed
     SeededModel.count.should == 3
   end
+
+  it "should seed only one file if one file is given" do
+    SeedFu.seed(File.dirname(__FILE__) + '/fixtures/seeded_models_2.rb')
+
+    SeededModel.count.should == 1
+    SeededModel.find(2).title.should == "Bar"
+  end
 end

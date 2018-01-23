@@ -1,3 +1,17 @@
+Version 2.3.7
+-------------
+
+Features:
+
+* Postgresql >= 10.0 support
+
+Version 2.3.6
+-------------
+
+Features:
+
+* Rails 5.0 support
+
 Version 2.3.5
 -------------
 
